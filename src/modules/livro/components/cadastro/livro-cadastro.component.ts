@@ -8,6 +8,7 @@ import { LivroInterface } from '../../types/livro.interface';
   selector: 'app-livro-cadastro',
   templateUrl: './livro-cadastro.component.html',
 })
+
 export class LivroCadastroComponent implements OnInit {
   livroForm: FormGroup = this.formBuilder.group({
     id: 0,
@@ -23,6 +24,8 @@ export class LivroCadastroComponent implements OnInit {
     publicacao: '2000-01-01',
   });
 
+  edicao: boolean = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private livroService: LivroService,
@@ -32,6 +35,8 @@ export class LivroCadastroComponent implements OnInit {
 
   ngOnInit(): void {
     const id = +this.activatedRoute.snapshot.params['id'];
+    this.edicao = !!id;
+
     console.log(id);
     if (id) {
       this.livroService.getLivro(id).subscribe((livro) => {
@@ -57,6 +62,6 @@ export class LivroCadastroComponent implements OnInit {
   }
 
   redirect() {
-    this.router.navigate(['/listagem']);
+    this.router.navigate(['livros', 'lista']);
   }
 }
